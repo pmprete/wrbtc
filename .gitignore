@@ -1,2 +1,2 @@
-/out
-*.gen.sol
+node_modules
+build

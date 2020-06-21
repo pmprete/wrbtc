@@ -1,0 +1,14 @@
+{
+  "name": "wrbtc-contract",
+  "description": "Wrapped RBTC Contract",
+  "private": true,
+  "scripts": {
+    "start": "npx truffle compile",
+    "test": "npx truffle test"
+  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "gh-pages": "^3.1.0",
+    "truffle": "^5.1.31"
+  }
+}

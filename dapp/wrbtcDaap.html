@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Libraries CSS Files -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="./WRBTC.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./WRBTC.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./WRBTC.png">
+        <link rel="shortcut icon" href="./WRBTC.png"> 
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700,900&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700,800&amp;display=swap" rel="stylesheet">
+
+        <style>
+            .btn-success,
+            .btn-success.focus, .btn-success:focus {
+                background-color: #2bd580ec;
+                border-color: #2bd580ec;
+            }
+        </style>
+
+        <title>WRBTC</title>
+        
+    </head>
+    <body>
+        <section id="main">
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="">
+                        <img id="logo" src="./WRBTC.png" style="height: 80px;" alt="WRBTC">
+                    </a>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                              <a class="nav-link" href="https://github.com/Think-and-Dev/wrbtc">Repository <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <button id="logIn" type="button" class="btn btn-success btn-block badge-pill text-truncate ml-2" style="width: 140px;">
+                                    connect wallet
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <section id="home">
+              <div class="container mt-4">
+                <h1 class="title">What is WRBTC?</h1>
+            
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead">Put plainly, wRBTC is "wrapped RBTC" but let's start by introducing the players.</p>
+                        <h5>FIRST, THERE'S RBTC </h5>
+                        <p>RBTC is the native currency built on the RSK blockchain.</p>
+                        <h5>SECOND, THERE ARE ALT TOKENS</h5>
+                        <p>When a dApp (decentralized app) is built off of the RSK Blockchain it usually implements its own form of Token.</p>
+                        <h5>FINALLY THE ERC-20 STANDARD</h5>
+                        <p>ERC-20 is a standard that defines how tokens are transferred and how to keep a consistent record of those transfers among tokens in the Network.</p>
+                        <br/>
+                        <h4>WHY YOU NEED WRBTC</h4>
+                        <p class="lead">RSK DOESN’T CONFORM TO THE ERC-20 STANDARD.</p>
+                        <h5>WRAPPING RBTC ALLOWS YOU TO TRADE DIRECTLY WITH ALT TOKENS.</h5>
+                        <p>The reason you need wRBTC is to be able to trade RBTC for other ERC-20 tokens on decentralized platforms like Radar Relay. Because decentralized platforms running on RSK use smart contracts to facilitate trades directly between users, every user needs to have the same standardized format for every token they trade. This ensures tokens don’t get lost in translation.</p>
+                        <h5>YOU DON'T ACTUALLY WRAP ANYTHING.</h5>
+                        <p>When you "wrap" RBTC, you aren't really wrapping so much as trading via a smart contract for an equal token called wRBTC. If you want to get plain RBTC back you need to "unwrap" it. AKA trade it back for plain RBTC.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group amount">
+                                    <label for="amount">Amount to convert</label>
+                                    <input name="amount" type="number" min="0" step="any" class="form-control" placeholder="Amount" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wrappers" class="row">
+                            <div class="col-md-6">
+                                <button id="deposit" class="btn btn-success btn-block mt-3 mb-3">Wrap</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button id="withdraw" class="btn btn-info btn-block mt-3 mb-3">Unwrap</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <section class="mt-1 col-md-12">
+                                <div id="alert-login" class="alert alert-success" role="alert" style='display:none'></div>
+                            </section>
+                            <section class="mt-1 col-md-12">
+                                <div id="alert-danger" class="alert alert-danger" role="alert" style='display:none'></div>
+                            </section>
+                            <section class="mt-1 col-md-12">
+                                <div id="alert-success" class="alert alert-success" role="alert" style='display:none'></div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+          </div>
+        </section>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Connect your Wallet</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer id="footer" class="section-bg">
+        </footer>
+        <div id="js">
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <!-- Updated Web3.js as MetaMsak uses 0.20.7 version -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.2/web3.min.js" integrity="sha384-5twr//DBZLxyCKhyQ993lJO6PM05f8HW/rTdv6zWhe8xgS8XAHH15oIcGFBTdwmM" crossorigin="anonymous"></script>
+            <!-- bignumber.js -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/9.0.0/bignumber.min.js" integrity="sha384-W92bSiy/NxoN+p5YNhm8ybWnIFnqtH0/Bxc4l9jojSsPK2KQdOvQonrRBon0O/om" crossorigin="anonymous"></script>
+           <!-- async-await-retry  https://github.com/VoodooTeam/async-await-retry -->
+            <script>
+                const getPromise = (fn, args) => {
+                    return new Promise((resolve, reject) => {
+                        if (!args) args = [];
+                        args.push((err, data) => {
+                            if (err) return reject(err);
+                            return resolve(data);
+                        });
+                        fn.apply(null, args);
+                    });
+                };
+
+                const clone = (obj) => {
+                    if (obj === null || typeof obj !== "object") {
+                        return obj;
+                    } else if (Array.isArray(obj)) {
+                        let clonedArr = [];
+                        for (const data of obj) {
+                            clonedArr.push(clone(data));
+                        }
+                        return clonedArr;
+                    } else {
+                        let clonedObj = {};
+                        const keys = Object.keys(obj);
+                        for (const key of keys) {
+                            clonedObj[key] = clone(obj[key]);
+                        }
+                        return clonedObj;
+                    }
+                }
+
+                /**
+                 * Retry system with async / await
+                 * 
+                 * @param {Function} fn : function to execute
+                 * @param {Array} args : arguments of fn function
+                 * @param {Object} config : arguments of fn function
+                 * @property {Number} config.retriesMax : number of retries, by default 3
+                 * @property {Number} config.interval : interval (in ms) between retry, by default 0
+                 * @property {Boolean} config.exponential : use exponential retry interval, by default true
+                 * @property {Number} config.factor: interval incrementation factor
+                 * @property {Number} config.isCb: is fn a callback style function ?
+                 */
+                async function retry(fn, args = [], config = {}) {
+                    const retriesMax = config.retriesMax || 3;
+                    let interval = config.interval || 0;
+                    const exponential = config.hasOwnProperty('exponential') ? config.exponential : true;
+                    const factor = config.factor || 2;
+
+                    for (let i = 0; i < retriesMax; i++) {
+                        try {
+                            if (!config.isCb) {
+                                const val = await fn.apply(null, args);
+                                return val;
+                            } else {
+                                const val = await getPromise(fn, clone(args));
+                                return val;
+                            }
+                        } catch (error) {
+                            if(retriesMax === i+1 || (error.hasOwnProperty('retryable') && !error.retryable)) throw error;
+
+                            interval = exponential ? interval * factor : interval;
+                            // if interval is set to zero, do not use setTimeout, gain 1 event loop tick
+                            if (interval) await new Promise(r => setTimeout(r, interval));
+                        }
+                    }
+                };
+                async function retry3Times(func, params = null) {
+                    return retry(func, params, {retriesMax: 3, interval: 1_000, exponential: false});
+                }
+            </script>
+            <!-- Custom Js -->
+            <script type="text/javascript">
+                //User
+                let address = '';
+                //Network configuration
+                let config = null;
+                let isTestnet = true;
+                let wrbtcContract = null;
+
+                $(document).ready(function() {
+                    if(!/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
+                        alert('This site will only work correctly under chrome or chromium');
+                    }
+
+                    disableInputs(true);
+
+                    $('#logIn').attr('onclick', 'onLogInClick()');
+                    $('#withdraw').click(withdraw);
+                    $('#deposit').click(deposit);
+
+                });
+
+                async function waitForReceipt(txHash) {
+                    let timeElapsed = 0;
+                    let interval = 10_000;
+                    return new Promise((resolve, reject) => {
+                        const checkInterval = setInterval(async () => {
+                            timeElapsed += interval;
+                            let receipt = await web3.eth.getTransactionReceipt(txHash);
+                            if(receipt != null) {
+                                clearInterval(checkInterval);
+                                resolve(receipt);
+                            }
+                            if(timeElapsed > 90_000) {
+                                reject(new Error(`Operation took too long <a target="_blank" href="${config.explorer}/tx/${txHash}">check Tx on the explorer</a>`));
+                            }
+                        }, interval);
+                    });
+                }
+
+                function onLogInClick() {
+                    if(!config) {
+                        $('#logIn').html('<i class="fas fa-sync fa-spin">');
+                        $('#logIn').attr('onclick', '');
+                        $('#alert-login').hide();
+                        isInstalled()
+                        .catch( (err) => {
+                            onMetaMaskConnectionError(err);
+                        });
+                    }
+                }
+
+                async function deposit() {
+                    $('#alert-success').html('');
+                    $('#alert-success').hide();
+                    $('#alert-danger').html('');
+                    $('#alert-danger').hide();
+                    wrbtcContract = new web3.eth.Contract(WRBTC_ABI, config.wrbtc);
+
+                    let amount = $('.amount input').val();
+                    if(!amount) {
+                        $('#alert-danger').html('Complete the Amount field');
+                        $('#alert-danger').show();
+                        return;
+                    }
+                    if($('.amount input').hasClass('is-invalid')) {
+                        crossTokenError('Invalid Amount');
+                        $('#alert-danger').show();
+                        return;
+                    }
+                    const decimalBase = 10**18;
+                    const amountInDecimal = new BigNumber(amount).times(decimalBase);
+
+                    disableInputs(true);
+                    let gasPrice = '';
+                    retry3Times(web3.eth.getBalance, [address])
+                    .then(async (balance) => {
+                        const balanceInDecimal = new BigNumber(balance);
+                        if(balanceInDecimal.isLessThan(amountInDecimal)) {
+                            throw new Error(`Insuficient Balance in your account, your current balance is ${balanceInDecimal.dividedBy(decimalBase)} RBTC`);
+                        }
+
+                        let block = await web3.eth.getBlock('latest');
+                        let gasPriceParsed= parseInt(block.minimumGasPrice);
+                        gasPriceParsed = gasPriceParsed <= 1 ? 1: gasPriceParsed * 1.01;
+                        gasPrice = `0x${Math.ceil(parseInt(gasPriceParsed)).toString(16)}`;
+
+                        return new Promise((resolve, reject) => {
+                            wrbtcContract.methods.deposit().send({value: amountInDecimal.toString(), from: address, gasPrice:gasPrice, gas:50000}, async (err, txHash) => {
+                                if (err) return reject(err);
+                                let receipt = await waitForReceipt(txHash);
+                                if(receipt.status) {
+                                    resolve(receipt);
+                                }
+                                reject(new Error(`Execution failed <a target="_blank" href="${config.explorer}/tx/${txHash}">see Tx</a>`));
+                            });
+                        });
+
+                    }).then(async (receipt) => {
+                        $('#alert-success').html(`<a target="_blank" href="${config.explorer}/tx/${receipt.transactionHash}">Transfer successful see Tx</a>`);
+                        $('#alert-success').show();
+                    }).catch((err) => {
+                        console.error(err);
+                        crossTokenError(`Couln't cross the tokens. ${err.message}`);
+                    });
+                }
+                
+
+                async function withdraw() {
+                    $('#alert-success').html('');
+                    $('#alert-success').hide();
+                    $('#alert-danger').html('');
+                    $('#alert-danger').hide();
+                    wrbtcContract = new web3.eth.Contract(WRBTC_ABI, config.wrbtc);
+
+                    let amount = $('.amount input').val();
+                    if(!amount) {
+                        $('#alert-danger').html('Complete the Amount field');
+                        $('#alert-danger').show();
+                        return;
+                    }
+                    if($('.amount input').hasClass('is-invalid')) {
+                        crossTokenError('Invalid Amount');
+                        $('#alert-danger').show();
+                        return;
+                    }
+                    const decimalBase = 10**18;
+                    const amountInDecimal = new BigNumber(amount).times(decimalBase);
+
+                    disableInputs(true);
+                    let gasPrice = '';
+                    retry3Times(wrbtcContract.methods.balanceOf(address).call)
+                    .then(async (balance) => {
+                        const balanceInDecimal = new BigNumber(balance);
+                        if(balanceInDecimal.isLessThan(amountInDecimal)) {
+                            throw new Error(`Insuficient Balance in your account, your current balance is ${balanceInDecimal.dividedBy(decimalBase)} WRBTC`);
+                        }
+
+                        let block = await web3.eth.getBlock('latest');
+                        let gasPriceParsed= parseInt(block.minimumGasPrice);
+                        gasPriceParsed = gasPriceParsed <= 1 ? 1: gasPriceParsed * 1.01;
+                        gasPrice = `0x${Math.ceil(parseInt(gasPriceParsed)).toString(16)}`;
+
+                        return new Promise((resolve, reject) => {
+                            wrbtcContract.methods.withdraw(amountInDecimal.toString()).send({from: address, gasPrice:gasPrice, gas:50000}, async (err, txHash) => {
+                                if (err) return reject(err);
+                                let receipt = await waitForReceipt(txHash);
+                                if(receipt.status) {
+                                    resolve(receipt);
+                                }
+                                reject(new Error(`Execution failed <a target="_blank" href="${config.explorer}/tx/${txHash}">see Tx</a>`));
+                            });
+                        });
+
+                    }).then(async (receipt) => {
+                        $('#alert-success').html(`<a target="_blank" href="${config.explorer}/tx/${receipt.transactionHash}">Transfer successful see Tx</a>`);
+                        $('#alert-success').show();
+                    }).catch((err) => {
+                        console.error(err);
+                        crossTokenError(`Couln't cross the tokens. ${err.message}`);
+                    });
+                }
+
+                async function isInstalled() {
+                    if (typeof window.ethereum === 'undefined') {
+                        console.log('undefined ethereum');
+                        return Promise.reject(new Error('You have an old version or not installed a wallet extension. Please install <a href="https://chrome.google.com/webstore/detail/nifty-wallet/jbdaocneiiinmjbjlgalhcelgbejmnid" target="_blank">Nifty wallet</a>'
+                        + ' or <a href="https://metamask.io/" target="_blank">MetaMask</a>. Once you have installed or updated it reload the page.'));
+                    }
+                    
+                    if(window.ethereum.enable) {
+                        window.ethereum.enable();
+                    }
+                    window.ethereum.autoRefreshOnNetworkChange = false;
+
+                    window.web3 = new Web3(window.ethereum);
+                    let selectedAddress = await getAccounts();
+                    let newNetworkId = await web3.eth.net.getId();
+                    await updateCallback({networkVersion: newNetworkId, selectedAddress: selectedAddress});
+                    web3.currentProvider.publicConfigStore.on('update', updateCallback);
+                    return newNetworkId;
+                }
+
+                function onMetaMaskConnectionError(err) {
+                    $('#myModal .modal-body').html(`<p>${err.message}</p>`);
+                    $('#myModal').modal('show');
+                    $('#logIn').attr('onclick', 'onLogInClick()');
+                    $('#logIn').text('Connect Wallet');
+                    $('#alert-login').show();
+                    disableInputs(true);
+                    wrbtcContract = null;
+                    config = null;
+                    address = '';
+                }
+
+                function disableInputs(disable) {
+                    $('#deposit').prop('disabled', disable);
+                    $('#withdraw').prop('disabled', disable);
+                    $('.amount input').prop('disabled', disable);
+                }
+
+                function onMetaMaskConnectionSuccess() {
+                    disableInputs(false);
+                }
+
+                async function updateCallback(updatedInfo) {
+                    try {
+                        await updateNetwork(updatedInfo.networkVersion);
+                        updateAddress(updatedInfo.selectedAddress);
+                        onMetaMaskConnectionSuccess();
+                    } catch(err) {
+                        onMetaMaskConnectionError(err);
+                    };
+                }
+
+                function updateAddress(newAddress) {
+                    address = newAddress;
+                    $('#logIn').text(newAddress);
+
+                }
+
+                async function updateNetwork(newNetwork) {
+                    newNetwork = parseInt(newNetwork);
+                    if(config && config.networkId == newNetwork) return;
+
+                    config = null; 
+                    switch (newNetwork) {
+                        case 30:
+                            config = RSK_MAINNET_CONFIG;
+                            break;
+                        case 31:
+                            config = RSK_TESTNET_CONFIG;
+                            break;
+                    }
+                    
+                    if(config == null) {
+                        $('.indicator').removeClass('btn-outline-success');
+                        $('.indicator').addClass('btn-outline-danger');
+                        throw new Error(`Wrong Network.<br /> Please connect your wallet to <b>Rsk Testnet or RSK Mainnet</b>`);
+                    }
+                    
+                    $('#myModal').modal('hide');
+                    $('#alert-login').hide();
+                }
+
+                async function getAccounts() {
+                    let accounts = await web3.eth.getAccounts();
+                    if (accounts.length === 0)
+                        throw new Error('Nifty Wallet or MetaMask is Locked, please unlock it and Reload the page to continue');
+                    return accounts[0];
+                }
+
+                
+                let RSK_TESTNET_CONFIG = {
+                    networkId: 31,
+                    name: 'RSK Testnet',
+                    wrbtc: '0x09b6ca5e4496238a1f176aea6bb607db96c2286e',
+                    explorer: 'https://explorer.testnet.rsk.co',
+                    explorerTokenTab: '?__ctab=general&__tab=events'
+                };
+                
+                let RSK_MAINNET_CONFIG = {
+                    networkId: 30,
+                    name: 'RSK Mainnet',
+                    wrbtc: "",
+                    explorer: 'https://explorer.rsk.co',
+                    explorerTokenTab: '?__ctab=general&__tab=events'
+                };
+                // --------- CONFIGS  END --------------
+
+                // --------- ABI --------------
+
+                const WRBTC_ABI = [ { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "src", "type": "address" }, { "indexed": true, "internalType": "address", "name": "guy", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "dst", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "Deposit", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "src", "type": "address" }, { "indexed": true, "internalType": "address", "name": "dst", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "src", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "Withdrawal", "type": "event" }, { "inputs": [ { "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [ { "internalType": "uint8", "name": "", "type": "uint8" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "stateMutability": "payable", "type": "receive" }, { "inputs": [], "name": "deposit", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "guy", "type": "address" }, { "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "approve", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "dst", "type": "address" }, { "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "transfer", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "src", "type": "address" }, { "internalType": "address", "name": "dst", "type": "address" }, { "internalType": "uint256", "name": "wad", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" } ];
+
+                // --------- ABI  END --------------
+            </script>
+        </div>
+    </body>
+</html>

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npx truffle compile",
-    "test": "npx truffle test"
+    "test": "npx truffle test",
+    "deploy": "npx gh-pages -d dapp"
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {

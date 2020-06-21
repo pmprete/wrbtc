@@ -1,3 +1,12 @@
+# WRBTC Deployed on RSK
+
+## WRBTC on RSK Mainnet
+https://explorer.rsk.co/address/0x967f8799af07df1534d48a95a5c9febe92c53ae0
+
+## WRBTC on RSK Testnet
+https://explorer.testnet.rsk.co/address/0x09b6ca5e4496238a1f176aea6bb607db96c2286e
+
+
 # What is WRBTC?
 
 ## Put plainly, wRBTC is "wrapped RBTC" but let's start by introducing the players.
@@ -20,7 +29,5 @@ The reason you need wRBTC is to be able to trade RBTC for other ERC-20 tokens on
 ## YOU DON'T ACTUALLY WRAP ANYTHING.
 When you "wrap" RBTC, you aren't really wrapping so much as trading via a smart contract for an equal token called wRBTC. If you want to get plain RBTC back you need to "unwrap" it. AKA trade it back for plain RBTC.
 
-## WRBTC on RSK Testnet
-https://explorer.testnet.rsk.co/address/0x09b6ca5e4496238a1f176aea6bb607db96c2286e
 
 

@@ -30,11 +30,13 @@ contract('Bridge_v1', async function (accounts) {
             const balance = new BN(await web3.eth.getBalance(anAccount));
             const wrbtcBalance = new BN(await this.wrbtc.balanceOf(anAccount));
 
-            await web3.eth.sendTransaction({
+            const receipt = await web3.eth.sendTransaction({
                 from: anAccount,
                 to: this.wrbtc.address,
                 value: amount
             })
+            console.log('receipt.gasUsed', receipt.gasUsed)
+            assert.equal(receipt.status, true);
 
             let result = new BN(await this.wrbtc.balanceOf(anAccount));
             assert.equal(result.toString(), amount.toString());
@@ -42,6 +44,8 @@ contract('Bridge_v1', async function (accounts) {
             assert.equal(result.toString(), amount.toString());
             const newBalance = new BN(await web3.eth.getBalance(anAccount));
             assert.equal(newBalance < balance.sub(amount), true);
+            const newWrbtcBalance = new BN(await this.wrbtc.balanceOf(anAccount));
+            assert.equal(newWrbtcBalance.toString(), wrbtcBalance.add(amount).toString());
         });
 
     });

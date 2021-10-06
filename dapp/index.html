@@ -15,7 +15,7 @@
         <link rel="apple-touch-icon" sizes="180x180" href="./wrbtc.png">
         <link rel="icon" type="image/png" sizes="32x32" href="./wrbtc.png">
         <link rel="icon" type="image/png" sizes="16x16" href="./wrbtc.png">
-        <link rel="shortcut icon" href="./wrbtc.png"> 
+        <link rel="shortcut icon" href="./wrbtc.png">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700,900&amp;display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
         </style>
 
         <title>WRBTC</title>
-        
+
     </head>
     <body>
         <section id="main">
@@ -38,7 +38,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container">
                     <a class="navbar-brand" href="">
-                        <img id="logo" src="./WRBTC.png" style="height: 80px;" alt="WRBTC">
+                        <img id="logo" src="https://raw.githubusercontent.com/Think-and-Dev/wrbtc/master/dapp/WRBTC.png" style="height: 80px;" alt="WRBTC">
                     </a>
                     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -378,7 +378,7 @@
                         return Promise.reject(new Error('You have an old version or not installed a wallet extension. Please install <a href="https://chrome.google.com/webstore/detail/nifty-wallet/jbdaocneiiinmjbjlgalhcelgbejmnid" target="_blank">Nifty wallet</a>'
                         + ' or <a href="https://metamask.io/" target="_blank">MetaMask</a>. Once you have installed or updated it reload the page.'));
                     }
-                    
+
                     if(window.ethereum.enable) {
                         window.ethereum.enable();
                     }
@@ -388,7 +388,7 @@
                     let selectedAddress = await getAccounts();
                     let newNetworkId = await web3.eth.net.getId();
                     await updateCallback({networkVersion: newNetworkId, selectedAddress: selectedAddress});
-                    web3.currentProvider.publicConfigStore.on('update', updateCallback);
+                    window.ethereum.on('update', updateCallback);
                     return newNetworkId;
                 }
 
